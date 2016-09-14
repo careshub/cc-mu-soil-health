@@ -40,33 +40,6 @@ class CC_MU_Soil_Health_Admin extends CC_MU_Soil_Health_Public {
 	protected $plugin_screen_hook_suffix = null;
 
 	/**
-	 *
-	 * Unique identifier for your plugin.
-	 *
-	 *
-	 * The variable name is used as the text domain when internationalizing strings
-	 * of text. Its value should match the Text Domain file header in the main
-	 * plugin file.
-	 *
-	 * @since    1.0.0
-	 *
-	 * @var      string
-	 */
-	protected $plugin_slug = 'mu-soil-health';
-
-	/**
-	 *
-	 * The current version of the plugin.
-	 *
-	 * Plugin version, used for cache-busting of style and script file references.
-	 *
-	 * @since    1.0.0
-	 *
-	 * @var      string
-	 */
-	protected $version = '1.0.0';
-
-	/**
 	 * Initialize the plugin by loading admin scripts & styles and adding a
 	 * settings page and menu.
 	 *
@@ -83,7 +56,6 @@ class CC_MU_Soil_Health_Admin extends CC_MU_Soil_Health_Public {
 			return;
 		} */
 
-		$this->version = mu_soil_health_get_plugin_version();
 
 		// Load admin style sheet and JavaScript.
 		// add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ) );
