@@ -35,8 +35,7 @@ function mlra_map_output() {
 		#mlramap {
 			font-family: "Open Sans", Helvetica, Arial, sans-serif;
 			cursor: pointer;
-			height: 500px;
-			width: 400px;
+
 		}
 	</style>
 
@@ -49,7 +48,7 @@ function mlra_map_output() {
 		<?xml-stylesheet type="text/css" href="mlra_styles.css"?>
 		<!-- Creator: Esri ArcMap 10.3.1.4959 -->
 		<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-		<svg width="750pt" height="750pt" viewBox="100 30 1200 1200" enable-background="new 1 1 1 1"
+		<svg width="88%" viewBox="100 30 1000 610" enable-background="new 1 1 1 1"
 			version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
 			<g id="Layers">
 				<g id="NRCS_MLRA_v42_2016_MO_gen">
@@ -3103,6 +3102,6 @@ function mlra_map_output() {
 
 	</div>
 	<br/>
-	<div id="theTable"><table><tr><td>table goes here</td></tr></table></div>
+	<div id="theTable"><table></table></div>
 	<?php
 }
