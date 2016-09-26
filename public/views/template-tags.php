@@ -3087,7 +3087,7 @@ function mlra_map_output() {
 				</g>
 
 				<g id="mlraid">
-					<text x="880" y="80" id="varMLRA">Mouse over map for info</text>
+					<text x="880" y="80" id="varMLRA">Click map to display Site Data</text>
 					<text x="880" y="110" id="varMLRAname"> </text>
 					<text x="880" y="135" id="varMLRAname2"> </text>
 					<text x="880" y="160" id="varLRRname"> </text>

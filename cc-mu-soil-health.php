@@ -75,5 +75,5 @@ function mu_soil_health_get_plugin_base_uri(){
  * @return string Current version of plugin.
  */
 function mu_soil_health_get_plugin_version(){
-	return '1.0.0';
+	return '1.0.1';
 }

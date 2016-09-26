@@ -214,17 +214,11 @@ function mlra_showtable(mlra,county)
                 tabStr += "&nbsp;&nbsp;&nbsp;&nbsp;" + selStr  //the pulldown list
                 tabStr += "&nbsp;&nbsp;&nbsp;&nbsp;<input type='button' value='Map MLRA' onclick='interactiveMap(\"" + mlra + "\")'/>";
                 tabStr += "<table>";
-	            tabStr += "<tr><td>MLRA</td>";
-	            tabStr += "<td>County</td>";
-	            tabStr += "<td>Region</td>";
-	            tabStr += "<td>Identifier</td>";
-	            tabStr += "<td>Field Management</td>";
-	            tabStr += "<td>Year</td>";
-	            tabStr += "<td>Total PLFA</td>";
-	            tabStr += "<td>Am Fungi</td>";
-	            tabStr += "<td>Active Carbon</td>";
-	            tabStr += "<td>Bulk Density</td>";
-	            tabStr += "<td>Run Off</td></tr>";
+	            tabStr += "<td title='County Name'>County</td>";
+	            tabStr += "<td title='Missouri Region'>Region</td>";
+	            tabStr += "<td title='Site Identifier'>Identifier</td>";
+	            tabStr += "<td title='Field Management Type'>Field Management</td>";
+	            tabStr += "<td title='Sample Year'>Year</td>";
 	            var tabStrTemp = "";
 	            var tempCounty = "";
 	            var tempRecCount = 0;
