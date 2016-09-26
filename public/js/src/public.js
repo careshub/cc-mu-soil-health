@@ -3,7 +3,7 @@ function isNumber(n) {
 }
 
 function interactiveMap(mlra) {
-    windowstring = "http://maps.communitycommons.org/viewer/?action=link_map&ids=14555%2Cve%2Cwtopo%2Ctopo%2C14554%2Cwater%2Cplacebnd%2Cplaces%2Ccounties%2CState%2Croads&vm=14554&vl=14554&vr=wtopo%2Ccounties%2CState&dt=&bbox=" + getMLRAinfo(mlra)[3]
+    windowstring = "http://maps.communitycommons.org/viewer/?action=link_map&projectid=35&ids=14554%2C14425%2Cve%2Cwtopo%2Ctopo%2Cwater%2Cplacebnd%2Cplaces%2Ccounties%2CState%2Croads&vm=14554%2C14425&vl=14554&vr=wtopo%2Ccounties%2CState&dt=&bbox=" + getMLRAinfo(mlra)[3]
     window.open(windowstring)
 }
 
@@ -90,6 +90,7 @@ function getMLRAinfo(mlra) {
             MLRAname = "Error";
             break;
     }
+
 
     return [MLRAname,LRRname,MLRAdescpage,MLRAbbox];
 }
