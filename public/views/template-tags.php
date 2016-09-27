@@ -15,29 +15,46 @@ function mlra_map_output() {
 	wp_enqueue_script( mu_soil_health_get_plugin_slug() . '-plugin-script', mu_soil_health_get_plugin_base_uri() . '/public/js/src/public.js', array(), mu_soil_health_get_plugin_version() );
 	?>
    <style>
-	#varMLRA {
-		font-size: 22pt;
-		font-weight: bold;
-		text-anchor: middle;
-	}
+     #varMLRA {
+     font-size: 22pt;
+     font-weight: bold;
+     text-anchor: middle;
+     }
 
-	#varMLRAname, #varMLRAname2 {
-			font-size: 16pt;
-			font-weight: bold;
-			text-anchor: middle;
-		}
+     #varMLRAname, #varMLRAname2 {
+     font-size: 16pt;
+     font-weight: bold;
+     text-anchor: middle;
+     }
 
-		#varLRRname,#varLRRname2 {
-			font-size: 15pt;
-			text-anchor: middle;
-		}
+     #varLRRname,#varLRRname2 {
+     font-size: 15pt;
+     text-anchor: middle;
+     }
 
-		#mlramap {
-			font-family: "Open Sans", Helvetica, Arial, sans-serif;
-			cursor: pointer;
+     #mlramap {
+     font-family: "Open Sans", Helvetica, Arial, sans-serif;
+     cursor: pointer;
+     }
 
-		}
-	</style>
+     /*
+     * IE ignores %width, so must specify w/h in pixels.  Not good for responsive design!
+     *
+     * [1] IE9
+     * [2] IE10+
+     */
+     /* 1 */
+     .ie9 #mlramap {
+        width: 960px;
+     }
+     /* 2 */
+     @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+     #mlramap {
+        height: 517px;
+        width: 960px;
+     }
+     }
+   </style>
 
 	<h1>Major Land Resource Areas Map</h1>
 	<!--embed id="mlramap" src="mlra_mo_4.svg" type="image/svg+xml" width="900" height="800" /-->
@@ -48,7 +65,7 @@ function mlra_map_output() {
 		<?xml-stylesheet type="text/css" href="mlra_styles.css"?>
 		<!-- Creator: Esri ArcMap 10.3.1.4959 -->
 		<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-		<svg width="88%" viewBox="100 30 1000 610" enable-background="new 1 1 1 1"
+		<svg width="88%" viewBox="100 30 1010 610" enable-background="new 1 1 1 1"
 			version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
 			<g id="Layers">
 				<g id="NRCS_MLRA_v42_2016_MO_gen">

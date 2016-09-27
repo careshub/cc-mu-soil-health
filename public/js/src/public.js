@@ -214,11 +214,17 @@ function mlra_showtable(mlra,county)
                 tabStr += "&nbsp;&nbsp;&nbsp;&nbsp;" + selStr  //the pulldown list
                 tabStr += "&nbsp;&nbsp;&nbsp;&nbsp;<input type='button' value='Map MLRA' onclick='interactiveMap(\"" + mlra + "\")'/>";
                 tabStr += "<table>";
+                tabStr += "<tr><td title='Major Land Resource Area Identifier'><a href='http://staging.communitycommons.org/groups/mu-soil-health/information/mlra'>MLRA</a></td>";
 	            tabStr += "<td title='County Name'>County</td>";
 	            tabStr += "<td title='Missouri Region'>Region</td>";
 	            tabStr += "<td title='Site Identifier'>Identifier</td>";
 	            tabStr += "<td title='Field Management Type'>Field Management</td>";
 	            tabStr += "<td title='Sample Year'>Year</td>";
+	            tabStr += "<td title='Total Phospolipid Fatty Acids'><a href='http://staging.communitycommons.org/groups/mu-soil-health/information/plfa'>Total PLFA</a></td>";
+	            tabStr += "<td title='Arbuscular Mycorrhizae Fungi (AMF)'><a href='http://staging.communitycommons.org/groups/mu-soil-health/information/amf'>Am Fungi</a></td>";
+	            tabStr += "<td title='Active Carbon'><a href='http://staging.communitycommons.org/groups/mu-soil-health/information/active-carbon'>Active Carbon</a></td>";
+	            tabStr += "<td title='Bulk Density'><a href='http://staging.communitycommons.org/groups/mu-soil-health/information/bulk-density'>Bulk Density</a></td>";
+	            tabStr += "<td title='Run Off'><a href='http://staging.communitycommons.org/groups/mu-soil-health/information/run-off'>Run Off</a></td></tr>";
 	            var tabStrTemp = "";
 	            var tempCounty = "";
 	            var tempRecCount = 0;
