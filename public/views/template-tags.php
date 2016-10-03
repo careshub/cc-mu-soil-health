@@ -36,6 +36,10 @@ function mlra_map_output() {
      font-family: "Open Sans", Helvetica, Arial, sans-serif;
      cursor: pointer;
      }
+     
+     select{
+       margin: 0 10px;
+     }
 
      /*
      * IE ignores %width, so must specify w/h in pixels.  Not good for responsive design!
@@ -72,7 +76,7 @@ function mlra_map_output() {
 					<clipPath id="SVG_CP_1">
 						<path d="M0,661.49291L0,0L1018.46794,0L1018.46794,661.49291L0,661.49291z"/>
 					</clipPath>
-					<path id="108D" onmouseover="mlra_showname('108D'); this.style.fill= '#FFFF9B';" onmouseout="this.style.fill= '#F5EF87';" onclick="mlra_showtable('108D','all');" clip-path="url(#SVG_CP_1)"
+					<path id="108D" onmouseover="mlra_showname('108D'); this.style.fill= '#FFFF9B';" onmouseout="this.style.fill= '#F5EF87';" onclick="mlra_showtable('108D','all','none');" clip-path="url(#SVG_CP_1)"
 						fill="#F5EF87" fill-rule="evenodd" stroke="#E1DB73" stroke-width="0.47996" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" d="
 						M302.13269,35.76231L294.21341,37.92245L291.57365,40.32261L286.05414,55.92361L283.1744,60.00388L283.41438,64.80419L282.45447,65.76425
 						L282.21449,71.52462L280.29466,74.40481L279.33475,80.16518L277.89488,83.5254L278.61482,85.2055L281.25458,86.88561L281.49456,92.64598
@@ -83,7 +87,7 @@ function mlra_map_output() {
 						L239.0184,90.00581L238.77842,88.08569L234.93876,80.40519L231.81905,78.48507L231.57907,74.16479L229.89922,71.52462L231.33909,68.88445
 						L229.65924,65.28422L229.41926,61.924L230.37918,58.32377L229.89922,56.88367L230.85913,54.2435L230.37918,49.92323L228.45935,44.8829
 						L228.21937,36.72237L227.25946,34.80225L302.13269,35.76231z"/>
-					<path id="113" onmouseover="mlra_showname('113'); this.style.fill= '#FFFFE3';" onmouseout="this.style.fill= '#FAFACF';" onclick="mlra_showtable('113','all');" clip-path="url(#SVG_CP_1)"
+					<path id="113" onmouseover="mlra_showname('113'); this.style.fill= '#FFFFE3';" onmouseout="this.style.fill= '#FAFACF';" onclick="mlra_showtable('113','all','none');" clip-path="url(#SVG_CP_1)"
 						fill="#FAFACF" fill-rule="evenodd" stroke="#E6E6BB" stroke-width="0.47996" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" d="
 						M556.98965,114.4874L556.98965,117.6076L560.10937,119.76774L560.58933,121.44785L559.38944,121.68786L557.70959,120.48778L557.22963,122.16789
 						L555.06983,121.44785L554.82985,122.16789L555.78976,123.848L558.90948,125.04808L557.70959,127.92826L561.54924,130.32842L558.18955,131.5285
@@ -224,7 +228,7 @@ function mlra_map_output() {
 						L546.43061,105.36681L545.71067,106.8069L550.27026,109.68709L550.27026,110.64715L549.31035,110.88716L549.79031,112.80729L
 						550.51024,111.12718L551.47015,111.60721L551.71013,112.80729L552.19009,112.08724L553.38998,112.08724L552.67005,112.80729L
 						553.15,114.00736L553.86994,112.56727L554.82985,114.24738L556.98965,114.4874z"/>
-					<path id="112" onmouseover="mlra_showname('112'); this.style.fill= '#FFFFD4';" onmouseout="this.style.fill= '#FAF7C0';" onclick="mlra_showtable('112','all');" clip-path="url(#SVG_CP_1)"
+					<path id="112" onmouseover="mlra_showname('112'); this.style.fill= '#FFFFD4';" onmouseout="this.style.fill= '#FAF7C0';" onclick="mlra_showtable('112','all','none');" clip-path="url(#SVG_CP_1)"
 						fill="#FAF7C0" fill-rule="evenodd" stroke="#E6E3AC" stroke-width="0.47996" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" d="
 						M424.04167,250.8162L424.28165,253.9364L425.48154,254.41643L429.32119,252.49631L430.28111,249.85614L431.72098,249.85614L433.16085,248.41605
 						L434.12076,249.61612L438.44037,249.61612L439.16031,248.65606L441.08013,249.85614L442.28002,249.13609L442.04004,247.696L443.47991,247.45598
@@ -285,7 +289,7 @@ function mlra_map_output() {
 						L389.96475,257.0566L390.20473,256.33656L392.36453,255.61651L392.84449,256.33656L394.28436,256.33656L395.72423,254.89646L
 						401.96367,252.25629L403.64352,249.61612L406.0433,248.41605L406.0433,247.696L408.2031,248.41605L411.08284,251.77626L412.28273,251.77626
 						L413.00267,249.37611L414.44254,249.13609L418.04221,251.77626L420.442,249.85614L424.04167,250.8162z"/>
-					<path id="116B" onmouseover="mlra_showname('116B'); this.style.fill= '#DEF4B1';" onmouseout="this.style.fill= '#CAE09D';" onclick="mlra_showtable('116B','all');" clip-path="url(#SVG_CP_1)"
+					<path id="116B" onmouseover="mlra_showname('116B'); this.style.fill= '#DEF4B1';" onmouseout="this.style.fill= '#CAE09D';" onclick="mlra_showtable('116B','all','none');" clip-path="url(#SVG_CP_1)"
 						fill="#CAE09D" fill-rule="evenodd" stroke="#B6CC89" stroke-width="0.47996" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" d="
 						M286.5341,541.47498L286.5341,480.03101L287.73399,479.31096L290.85371,479.79099L293.73345,481.23108L294.21341,480.27102L298.29304,480.51104
 						L298.29304,478.83093L299.25295,478.11088L300.69282,477.87087L301.89271,479.07094L302.85263,474.75067L301.65273,474.27063
@@ -380,7 +384,7 @@ function mlra_map_output() {
 						L300.21286,529.23418L302.61265,528.99417L301.17278,525.63395L299.01297,525.63395L296.37321,530.91429L297.09315,531.87436
 						L294.45339,534.51453L292.53356,534.75454L291.57365,536.19463L292.0536,536.91468L289.8938,538.59479L287.97397,539.07482L286.5341,541.47498
 						z"/>
-					<path id="115B" onmouseover="mlra_showname('115B'); this.style.fill= '#FFFF6B';" onmouseout="this.style.fill= '#FAF257';" onclick="mlra_showtable('115B','all');" clip-path="url(#SVG_CP_1)"
+					<path id="115B" onmouseover="mlra_showname('115B'); this.style.fill= '#FFFF6B';" onmouseout="this.style.fill= '#FAF257';" onclick="mlra_showtable('115B','all','none');" clip-path="url(#SVG_CP_1)"
 						fill="#FAF257" fill-rule="evenodd" stroke="none" d="M815.68627,483.87125L815.44629,483.39122
 						L815.68627,483.87125zM813.04651,478.3509L813.04651,478.11088L813.28649,478.83093L813.04651,478.3509zM812.56655,476.19076
 						L812.56655,475.47071L812.56655,476.19076zM812.56655,474.99068L812.56655,475.2307L812.56655,474.99068zM812.80653,474.75067
@@ -751,7 +755,7 @@ function mlra_map_output() {
 						497.47503,204.97324L497.71501,206.17332L499.39486,204.73322L500.35477,205.21326L500.1148,208.09344L502.2746,206.65335L502.75456,208.09344
 						L503.23451,206.65335L502.51458,204.01318L505.15434,199.6929L505.6343,200.41295L505.39432,203.77316L506.59421,205.45327L506.11425,206.17332
 						L507.07417,206.65335"/>
-					<path id="131A" onmouseover="mlra_showname('131A'); this.style.fill= '#84E6FA';" onmouseout="this.style.fill= '#70D2E6';" onclick="mlra_showtable('131A','all');" clip-path="url(#SVG_CP_1)"
+					<path id="131A" onmouseover="mlra_showname('131A'); this.style.fill= '#84E6FA';" onmouseout="this.style.fill= '#70D2E6';" onclick="mlra_showtable('131A','all','none');" clip-path="url(#SVG_CP_1)"
 						fill="#70D2E6" fill-rule="evenodd" stroke="#5CBED2" stroke-width="0.47996" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" d="
 						M742.97284,570.75687L742.97284,570.75687zM742.73287,570.75687L741.77295,570.03682L742.73287,570.75687L742.73287,570.75687
 						zM742.01293,569.7968L742.01293,569.7968zM742.01293,569.55679L742.01293,569.55679zM741.77295,569.55679L741.77295,569.31677
@@ -823,7 +827,7 @@ function mlra_map_output() {
 						L789.52864,484.35129L788.08877,488.91158L790.00859,488.67156L791.20848,492.03178L794.3282,493.71189L795.28812,497.07211L
 						797.44792,497.55214L809.92679,486.51143L811.12668,486.75144L814.72636,484.11127L811.60664,475.2307L810.16677,474.75067L812.0866,473.07056
 						L812.56655,472.11049L812.0866,471.87048L809.68681,472.59053z"/>
-					<path id="116A" onmouseover="mlra_showname('116A'); this.style.fill= '#BEE07A';" onmouseout="this.style.fill= '#AACC66';" onclick="mlra_showtable('116A','all');" clip-path="url(#SVG_CP_1)"
+					<path id="116A" onmouseover="mlra_showname('116A'); this.style.fill= '#BEE07A';" onmouseout="this.style.fill= '#AACC66';" onclick="mlra_showtable('116A','all','none');" clip-path="url(#SVG_CP_1)"
 						fill="#AACC66" fill-rule="evenodd" stroke="none"  d="M792.40838,471.39045L789.04868,471.15043
 						L786.88887,469.71034L784.00913,470.43039L783.76916,469.47032L782.80924,470.6704L780.88942,471.15043L779.44955,469.47032L
 						781.36937,468.99029L781.12939,467.5502L779.68952,466.83015L779.20957,465.39006L778.48963,465.15005L777.52972,466.83015L779.9295,468.03023
@@ -1226,7 +1230,7 @@ function mlra_map_output() {
 						733.37371,416.66691L733.37371,414.26676L731.45388,412.34663L726.41434,410.90654L722.09473,408.02636L717.53514,398.66575L
 						717.53514,396.2656L718.73503,395.78557L720.65486,396.02558L721.13482,395.54555L719.45497,391.46529L717.29516,389.06513L718.49506,386.66498
 						L716.81521,381.14462L717.53514,379.2245"/>
-					<path id="109" onmouseover="mlra_showname('109'); this.style.fill= '#FAF14D';" onmouseout="this.style.fill= '#E6DD39';" onclick="mlra_showtable('109','all');" clip-path="url(#SVG_CP_1)"
+					<path id="109" onmouseover="mlra_showname('109'); this.style.fill= '#FAF14D';" onmouseout="this.style.fill= '#E6DD39';" onclick="mlra_showtable('109','all','none');" clip-path="url(#SVG_CP_1)"
 						fill="#E6DD39" fill-rule="evenodd" stroke="#D2C925" stroke-width="0.47996" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" d="
 						M609.06495,62.16402L608.58499,62.16402L609.06495,62.16402zM609.78488,62.16402L609.5449,62.16402L609.78488,62.16402zM608.34501,61.68398
 						L608.58499,61.44397L608.34501,61.68398zM612.9046,61.44397L612.66462,61.44397L612.9046,61.44397zM606.66516,61.20395L606.66516,60.96394
@@ -1324,7 +1328,7 @@ function mlra_map_output() {
 						279.33475,99.84645L279.57473,98.16634L283.1744,96.24622L281.49456,92.64598L281.25458,86.88561L278.61482,85.2055L277.89488,83.5254
 						L279.33475,80.16518L280.29466,74.40481L282.21449,71.52462L282.45447,65.76425L283.41438,64.80419L283.1744,60.00388L286.05414,55.92361
 						L291.57365,40.32261L294.21341,37.92245L302.13269,35.76231L426.20148,34.56223L544.03083,31.68205L581.46744,30.24195z"/>
-					<path id="115C" onmouseover="mlra_showname('115C'); this.style.fill= '#E5DD48';" onmouseout="this.style.fill= '#D1C934';" onclick="mlra_showtable('115C','all');" clip-path="url(#SVG_CP_1)"
+					<path id="115C" onmouseover="mlra_showname('115C'); this.style.fill= '#E5DD48';" onmouseout="this.style.fill= '#D1C934';" onclick="mlra_showtable('115C','all','none');" clip-path="url(#SVG_CP_1)"
 						fill="#D1C934" fill-rule="evenodd" stroke="#BDB520" stroke-width="0.47996" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" d="
 						M593.70634,45.36293L594.18629,45.60295L594.66625,45.84296L594.90623,45.84296L595.62616,46.32299L596.10612,47.04304L596.3461,48.24312
 						L596.58608,48.72315L597.30601,49.92323L598.98586,50.88329L599.22584,50.88329L599.70579,50.88329L600.42573,51.1233L600.90569,51.1233
@@ -1476,7 +1480,7 @@ function mlra_map_output() {
 						L579.06766,39.60256L581.46744,44.64288L585.54707,46.56301L591.54653,51.1233L592.9864,51.60333L593.70634,53.52346L592.02649,54.96355
 						L593.94631,57.12369L593.46636,58.8038L596.10612,59.04381L597.06603,57.36371L596.58608,55.92361L598.02595,54.2435L597.78597,52.32338
 						L597.54599,50.64327L593.70634,45.36293z"/>
-					<path id="134" onmouseover="mlra_showname('134'); this.style.fill= '#E57D68';" onmouseout="this.style.fill= '#D16954';" onclick="mlra_showtable('134','all');" clip-path="url(#SVG_CP_1)"
+					<path id="134" onmouseover="mlra_showname('134'); this.style.fill= '#E57D68';" onmouseout="this.style.fill= '#D16954';" onclick="mlra_showtable('134','all','none');" clip-path="url(#SVG_CP_1)"
 						fill="#D16954" fill-rule="evenodd" stroke="#BD5540" stroke-width="0.47996" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" d="
 						M742.25291,572.19696L742.25291,571.95694L742.25291,572.19696zM776.56981,493.47187L778.00968,494.43194L778.24966,499.95229
 						L777.04976,501.6324L775.60989,501.87242L773.69007,503.55253L771.29028,510.03294L773.45009,509.55291L775.60989,511.71305L
@@ -1493,7 +1497,7 @@ function mlra_map_output() {
 						L738.41326,517.95346L736.49343,514.83325L736.49343,513.39316L739.61315,512.19308L738.17328,511.71305L739.85313,510.99301
 						L738.89321,510.75299L737.21336,512.19308L737.45334,510.27296L738.65323,508.83287L744.89267,506.91274L748.9723,502.11243L
 						751.37208,501.6324L754.97176,498.99223L760.73124,497.79215L766.97067,494.19192L774.88996,492.75183L776.56981,493.47187z"/>
-					<path id="116C" onmouseover="mlra_showname('116C'); this.style.fill= '#A1CC4B';" onmouseout="this.style.fill= '#8DB837';" onclick="mlra_showtable('116C','all');" clip-path="url(#SVG_CP_1)"
+					<path id="116C" onmouseover="mlra_showname('116C'); this.style.fill= '#A1CC4B';" onmouseout="this.style.fill= '#8DB837';" onclick="mlra_showtable('116C','all','none');" clip-path="url(#SVG_CP_1)"
 						fill="#8DB837" fill-rule="evenodd" stroke="#79A423" stroke-width="0.47996" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" d="
 						M717.53514,379.2245L716.81521,381.14462L718.49506,386.66498L717.29516,389.06513L719.45497,391.46529L721.13482,395.54555L
 						720.65486,396.02558L718.73503,395.78557L717.53514,396.2656L717.53514,398.66575L722.09473,408.02636L726.41434,410.90654L731.45388,412.34663
@@ -1510,7 +1514,7 @@ function mlra_map_output() {
 						L666.65974,417.38696L663.78,411.14656L662.82009,407.78634L663.06007,405.38619L664.49994,403.70608L668.33959,403.22605L668.81955,401.54594
 						L673.37913,399.62581L678.1787,399.62581L680.09853,398.42574L685.37805,397.9457L694.7372,386.66498L699.29679,379.46451L705.05627,380.9046
 						L715.85529,378.26443L717.53514,379.2245z"/>
-					<path id="107B" onmouseover="mlra_showname('107B'); this.style.fill= '#AAA64F';" onmouseout="this.style.fill= '#96923B';" onclick="mlra_showtable('107B','all');" clip-path="url(#SVG_CP_1)"
+					<path id="107B" onmouseover="mlra_showname('107B'); this.style.fill= '#AAA64F';" onmouseout="this.style.fill= '#96923B';" onclick="mlra_showtable('107B','all','none');" clip-path="url(#SVG_CP_1)"
 						fill="#96923B" fill-rule="evenodd" stroke="#827E27" stroke-width="0.47996" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" d="
 						M227.25946,34.80225L228.21937,36.72237L228.45935,44.8829L230.37918,49.92323L230.85913,54.2435L229.89922,56.88367L230.37918,58.32377
 						L229.41926,61.924L229.65924,65.28422L231.33909,68.88445L229.89922,71.52462L231.57907,74.16479L231.81905,78.48507L234.93876,80.40519

@@ -166,19 +166,45 @@ function mlra_showname(mlra)
 	}
 }
 
-function mlra_showtable(mlra,county)
+function mlra_showtable(mlra,county,groupby)
 {
     // clear things out if selecting a new MLRA
     if (county == 'all') {
-        makevis('none|none')
-    }    
+        makevis('none|none|none')
+    }
+    console.log(groupby)
     var tabStr = ""
     var post = ""
-    //Set up query - always get all counties in an MLRA, then deal with subsetting below.  But only get averages for selected county.
+    var scrolltoval = "#theTable"
+    //Set up query - always get all counties in an MLRA.  Get averages for state and  selected mlra or county.  Lots of queries for group by!
     if (county == 'all') {
-        post = { "sql_query": "Select MLRA,County,StateLocation,SiteID,FieldManagemnt,Year,TotalPLFA,AMFungi,ActiveCarbon,BulkDensity,RunOff from CARES.CARES.SoilHealth_06_sep_2016 where MLRA = '" + mlra + "' union all select 'ZZ' as MLRA,'Average' as County,'&nbsp;&nbsp;-' as StateLocation,'&nbsp;&nbsp;-' as SiteID, '&nbsp;&nbsp;-' as FieldManagemnt, 0 as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff from CARES.CARES.SoilHealth_06_sep_2016 where MLRA = '" + mlra + "' union all select 'ZZZ' as MLRA,'State Average' as County,'&nbsp;&nbsp;-' as StateLocation,'&nbsp;&nbsp;-' as SiteID, '&nbsp;&nbsp;-' as FieldManagemnt, 0 as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff from CARES.CARES.SoilHealth_06_sep_2016 order by MLRA, County, Year, SiteID" }
+        if (groupby == 'none') {
+            post = { "sql_query": "Select MLRA,County,StateLocation,SiteID,FieldManagemnt,Year,TotalPLFA,AMFungi,ActiveCarbon,BulkDensity, RunOff, 1 as numrecs from CARES.CARES.SoilHealth_06_sep_2016 where MLRA = '" + mlra + "' union all select 'ZZ' as MLRA,'Average' as County,'&nbsp;&nbsp;-' as StateLocation,'&nbsp;&nbsp;-' as SiteID, '&nbsp;&nbsp;-' as FieldManagemnt, NULL as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff, count(*) as numrecs from CARES.CARES.SoilHealth_06_sep_2016 where MLRA = '" + mlra + "' union all select 'ZZZ' as MLRA,'State Average' as County,'&nbsp;&nbsp;-' as StateLocation,'&nbsp;&nbsp;-' as SiteID, '&nbsp;&nbsp;-' as FieldManagemnt, NULL as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff, count(*) as numrecs from CARES.CARES.SoilHealth_06_sep_2016 order by MLRA, County, Year, SiteID" }
+        } else if (groupby == 'county') {
+            post = { "sql_query": "Select MLRA,County,'&nbsp;&nbsp;-' as StateLocation,'&nbsp;&nbsp;-' as SiteID,'&nbsp;&nbsp;-' as FieldManagemnt,NULL as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff, count(*) as numrecs from CARES.CARES.SoilHealth_06_sep_2016 where MLRA = '" + mlra + "' group by mlra,county union all select 'ZZ' as MLRA,'Average' as County,'&nbsp;&nbsp;-' as StateLocation,'&nbsp;&nbsp;-' as SiteID, '&nbsp;&nbsp;-' as FieldManagemnt, NULL as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff, count(*) as numrecs from CARES.CARES.SoilHealth_06_sep_2016 where MLRA = '" + mlra + "' union all select 'ZZZ' as MLRA,'State Average' as County,'&nbsp;&nbsp;-' as StateLocation,'&nbsp;&nbsp;-' as SiteID, '&nbsp;&nbsp;-' as FieldManagemnt, NULL as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff, count(*) as numrecs from CARES.CARES.SoilHealth_06_sep_2016 order by MLRA, County, Year, SiteID" }
+        } else if (groupby == 'region') {
+            post = { "sql_query": "Select MLRA,'&nbsp;&nbsp;-' as County,StateLocation,'&nbsp;&nbsp;-' as SiteID,'&nbsp;&nbsp;-' as FieldManagemnt,NULL as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff, count(*) as numrecs from CARES.CARES.SoilHealth_06_sep_2016 where MLRA = '" + mlra + "' group by mlra,statelocation union all select 'ZZ' as MLRA,'Average' as County,'&nbsp;&nbsp;-' as StateLocation,'&nbsp;&nbsp;-' as SiteID, '&nbsp;&nbsp;-' as FieldManagemnt, NULL as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff, count(*) as numrecs from CARES.CARES.SoilHealth_06_sep_2016 where MLRA = '" + mlra + "' union all select 'ZZZ' as MLRA,'State Average' as County,'&nbsp;&nbsp;-' as StateLocation,'&nbsp;&nbsp;-' as SiteID, '&nbsp;&nbsp;-' as FieldManagemnt, NULL as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff, count(*) as numrecs from CARES.CARES.SoilHealth_06_sep_2016 order by MLRA, County, Year, SiteID" }
+        } else if (groupby == 'identifier') {
+            post = { "sql_query": "Select MLRA,'&nbsp;&nbsp;-' as County,'&nbsp;&nbsp;-' as StateLocation,SiteID,'&nbsp;&nbsp;-' as FieldManagemnt,NULL as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff, count(*) as numrecs from CARES.CARES.SoilHealth_06_sep_2016 where MLRA = '" + mlra + "' group by mlra,siteid union all select 'ZZ' as MLRA,'Average' as County,'&nbsp;&nbsp;-' as StateLocation,'&nbsp;&nbsp;-' as SiteID, '&nbsp;&nbsp;-' as FieldManagemnt, NULL as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff, count(*) as numrecs from CARES.CARES.SoilHealth_06_sep_2016 where MLRA = '" + mlra + "' union all select 'ZZZ' as MLRA,'State Average' as County,'&nbsp;&nbsp;-' as StateLocation,'&nbsp;&nbsp;-' as SiteID, '&nbsp;&nbsp;-' as FieldManagemnt, NULL as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff, count(*) as numrecs from CARES.CARES.SoilHealth_06_sep_2016 order by MLRA, County, Year, SiteID" }
+        } else if (groupby == 'fldmgt') {
+            post = { "sql_query": "Select MLRA,'&nbsp;&nbsp;-' as County,'&nbsp;&nbsp;-' as StateLocation,'&nbsp;&nbsp;-' as SiteID,FieldManagemnt,NULL as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff, count(*) as numrecs from CARES.CARES.SoilHealth_06_sep_2016 where MLRA = '" + mlra + "' group by mlra,FieldManagemnt union all select 'ZZ' as MLRA,'Average' as County,'&nbsp;&nbsp;-' as StateLocation,'&nbsp;&nbsp;-' as SiteID, '&nbsp;&nbsp;-' as FieldManagemnt, NULL as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff, count(*) as numrecs from CARES.CARES.SoilHealth_06_sep_2016 where MLRA = '" + mlra + "' union all select 'ZZZ' as MLRA,'State Average' as County,'&nbsp;&nbsp;-' as StateLocation,'&nbsp;&nbsp;-' as SiteID, '&nbsp;&nbsp;-' as FieldManagemnt, NULL as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff, count(*) as numrecs from CARES.CARES.SoilHealth_06_sep_2016 order by MLRA, County, Year, SiteID" }
+        } else if (groupby == 'year') {
+            post = { "sql_query": "Select MLRA,'&nbsp;&nbsp;-' as County,'&nbsp;&nbsp;-' as StateLocation,'&nbsp;&nbsp;-' as SiteID,'&nbsp;&nbsp;-' as FieldManagemnt,Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff, count(*) as numrecs from CARES.CARES.SoilHealth_06_sep_2016 where MLRA = '" + mlra + "' group by mlra,year union all select 'ZZ' as MLRA,'Average' as County,'&nbsp;&nbsp;-' as StateLocation,'&nbsp;&nbsp;-' as SiteID, '&nbsp;&nbsp;-' as FieldManagemnt, NULL as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff, count(*) as numrecs from CARES.CARES.SoilHealth_06_sep_2016 where MLRA = '" + mlra + "' union all select 'ZZZ' as MLRA,'State Average' as County,'&nbsp;&nbsp;-' as StateLocation,'&nbsp;&nbsp;-' as SiteID, '&nbsp;&nbsp;-' as FieldManagemnt, NULL as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff, count(*) as numrecs from CARES.CARES.SoilHealth_06_sep_2016 order by MLRA, County, Year, SiteID" }
+        }
     } else {
-        post = { "sql_query": "Select MLRA,County,StateLocation,SiteID,FieldManagemnt,Year,TotalPLFA,AMFungi,ActiveCarbon,BulkDensity,RunOff from CARES.CARES.SoilHealth_06_sep_2016 where MLRA = '" + mlra + "' union all select 'ZZ' as MLRA,'Average' as County,'&nbsp;&nbsp;-' as StateLocation,'&nbsp;&nbsp;-' as SiteID, '&nbsp;&nbsp;-' as FieldManagemnt, 0 as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff from CARES.CARES.SoilHealth_06_sep_2016 where MLRA = '" + mlra + "' and County = '" + county + "' union all select 'ZZZ' as MLRA,'State Average' as County,'&nbsp;&nbsp;-' as StateLocation,'&nbsp;&nbsp;-' as SiteID, '&nbsp;&nbsp;-' as FieldManagemnt, 0 as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff from CARES.CARES.SoilHealth_06_sep_2016 order by MLRA, County, Year, SiteID" }
+        if (groupby == 'none') {
+            post = { "sql_query": "Select MLRA,County,StateLocation,SiteID,FieldManagemnt,Year,TotalPLFA,AMFungi,ActiveCarbon,BulkDensity,RunOff, 1 as numrecs from CARES.CARES.SoilHealth_06_sep_2016 where MLRA = '" + mlra + "' and County = '" + county + "' union all select 'ZZ' as MLRA,'Average' as County,'&nbsp;&nbsp;-' as StateLocation,'&nbsp;&nbsp;-' as SiteID, '&nbsp;&nbsp;-' as FieldManagemnt, NULL as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff, count(*) as numrecs from CARES.CARES.SoilHealth_06_sep_2016 where MLRA = '" + mlra + "' and County = '" + county + "' union all select 'ZZZ' as MLRA,'State Average' as County,'&nbsp;&nbsp;-' as StateLocation,'&nbsp;&nbsp;-' as SiteID, '&nbsp;&nbsp;-' as FieldManagemnt, NULL as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff, count(*) as numrecs from CARES.CARES.SoilHealth_06_sep_2016 order by MLRA, County, Year, SiteID" }
+        } else if (groupby == 'county') {
+            post = { "sql_query": "Select MLRA,County,'&nbsp;&nbsp;-' as StateLocation,'&nbsp;&nbsp;-' as SiteID,'&nbsp;&nbsp;-' as FieldManagemnt,NULL as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff, count(*) as numrecs from CARES.CARES.SoilHealth_06_sep_2016 where MLRA = '" + mlra + "' and County = '" + county + "' group by mlra,county union all select 'ZZ' as MLRA,'Average' as County,'&nbsp;&nbsp;-' as StateLocation,'&nbsp;&nbsp;-' as SiteID, '&nbsp;&nbsp;-' as FieldManagemnt, NULL as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff, count(*) as numrecs from CARES.CARES.SoilHealth_06_sep_2016 where MLRA = '" + mlra + "' and County = '" + county + "' union all select 'ZZZ' as MLRA,'State Average' as County,'&nbsp;&nbsp;-' as StateLocation,'&nbsp;&nbsp;-' as SiteID, '&nbsp;&nbsp;-' as FieldManagemnt, NULL as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff, count(*) as numrecs from CARES.CARES.SoilHealth_06_sep_2016 order by MLRA, County, Year, SiteID" }
+        } else if (groupby == 'region') {
+            post = { "sql_query": "Select MLRA,County,StateLocation,'&nbsp;&nbsp;-' as SiteID,'&nbsp;&nbsp;-' as FieldManagemnt,NULL as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff, count(*) as numrecs from CARES.CARES.SoilHealth_06_sep_2016 where MLRA = '" + mlra + "' and County = '" + county + "' group by mlra,county,statelocation union all select 'ZZ' as MLRA,'Average' as County,'&nbsp;&nbsp;-' as StateLocation,'&nbsp;&nbsp;-' as SiteID, '&nbsp;&nbsp;-' as FieldManagemnt, NULL as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff, count(*) as numrecs from CARES.CARES.SoilHealth_06_sep_2016 where MLRA = '" + mlra + "' and County = '" + county + "' union all select 'ZZZ' as MLRA,'State Average' as County,'&nbsp;&nbsp;-' as StateLocation,'&nbsp;&nbsp;-' as SiteID, '&nbsp;&nbsp;-' as FieldManagemnt, NULL as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff, count(*) as numrecs from CARES.CARES.SoilHealth_06_sep_2016 order by MLRA, County, Year, SiteID" }
+        } else if (groupby == 'identifier') {
+            post = { "sql_query": "Select MLRA,County,'&nbsp;&nbsp;-' as StateLocation,SiteID,'&nbsp;&nbsp;-' as FieldManagemnt,NULL as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff, count(*) as numrecs from CARES.CARES.SoilHealth_06_sep_2016 where MLRA = '" + mlra + "' and County = '" + county + "' group by mlra,county,siteid union all select 'ZZ' as MLRA,'Average' as County,'&nbsp;&nbsp;-' as StateLocation,'&nbsp;&nbsp;-' as SiteID, '&nbsp;&nbsp;-' as FieldManagemnt, NULL as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff, count(*) as numrecs from CARES.CARES.SoilHealth_06_sep_2016 where MLRA = '" + mlra + "' and County = '" + county + "' union all select 'ZZZ' as MLRA,'State Average' as County,'&nbsp;&nbsp;-' as StateLocation,'&nbsp;&nbsp;-' as SiteID, '&nbsp;&nbsp;-' as FieldManagemnt, NULL as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff, count(*) as numrecs from CARES.CARES.SoilHealth_06_sep_2016 order by MLRA, County, Year, SiteID" }
+        } else if (groupby == 'fldmgt') {
+            post = { "sql_query": "Select MLRA,County,'&nbsp;&nbsp;-' as StateLocation,'&nbsp;&nbsp;-' as SiteID,FieldManagemnt,NULL as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff, count(*) as numrecs from CARES.CARES.SoilHealth_06_sep_2016 where MLRA = '" + mlra + "' and County = '" + county + "' group by mlra,county,FieldManagemnt union all select 'ZZ' as MLRA,'Average' as County,'&nbsp;&nbsp;-' as StateLocation,'&nbsp;&nbsp;-' as SiteID, '&nbsp;&nbsp;-' as FieldManagemnt, NULL as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff, count(*) as numrecs from CARES.CARES.SoilHealth_06_sep_2016 where MLRA = '" + mlra + "' and County = '" + county + "' union all select 'ZZZ' as MLRA,'State Average' as County,'&nbsp;&nbsp;-' as StateLocation,'&nbsp;&nbsp;-' as SiteID, '&nbsp;&nbsp;-' as FieldManagemnt, NULL as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff, count(*) as numrecs from CARES.CARES.SoilHealth_06_sep_2016 order by MLRA, County, Year, SiteID" }
+        } else if (groupby == 'year') {
+            post = { "sql_query": "Select MLRA,County,'&nbsp;&nbsp;-' as StateLocation,'&nbsp;&nbsp;-' as SiteID,'&nbsp;&nbsp;-' as FieldManagemnt,Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff, count(*) as numrecs from CARES.CARES.SoilHealth_06_sep_2016 where MLRA = '" + mlra + "' and County = '" + county + "' group by mlra,county,year union all select 'ZZ' as MLRA,'Average' as County,'&nbsp;&nbsp;-' as StateLocation,'&nbsp;&nbsp;-' as SiteID, '&nbsp;&nbsp;-' as FieldManagemnt, NULL as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff, count(*) as numrecs from CARES.CARES.SoilHealth_06_sep_2016 where MLRA = '" + mlra + "' and County = '" + county + "' union all select 'ZZZ' as MLRA,'State Average' as County,'&nbsp;&nbsp;-' as StateLocation,'&nbsp;&nbsp;-' as SiteID, '&nbsp;&nbsp;-' as FieldManagemnt, NULL as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff, count(*) as numrecs from CARES.CARES.SoilHealth_06_sep_2016 order by MLRA, County, Year, SiteID" }
+        }
     }
     //post = { "sql_query": "Select MLRA,County,StateLocation,SiteID,FieldManagemnt,Year,TotalPLFA,AMFungi,ActiveCarbon,BulkDensity,RunOff from CARES.CARES.SoilHealth_06_sep_2016 where MLRA = '" + mlra + "' union all select 'ZZ' as MLRA,'Average' as County,'N/A' as StateLocation,'N/A' as SiteID, 'N/A' as FieldManagemnt, 0 as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(RunOff) as RunOff from CARES.CARES.SoilHealth_06_sep_2016 where MLRA = '" + mlra + "'order by MLRA, County, Year, SiteID" }
 	jQuery.ajax({
@@ -194,37 +220,42 @@ function mlra_showtable(mlra,county)
 	        if ((data == null) || (data.length < 3)) {
 	            tabStr = "No records found for <a href='http://www.communitycommons.org/wp-content/uploads/2016/09/nrcs142p2_050898.pdf#page=" + getMLRAinfo(mlra)[2] + "' target='_blank'>MLRA " + mlra + "  (" + getMLRAinfo(mlra)[0] + ")</a>"
 	            tabStr += "&nbsp;&nbsp;&nbsp;&nbsp;<input type='button' value='Map MLRA' onclick='interactiveMap(\"" + mlra + "\")'/>";
+	            scrolltoval = "#theTable"
 	        } else {
-	            // first set the counties in the select list - should always have all counties in MLRA
-	            selStr = "<select onchange='makevis(this.value)'><option value='" + mlra + "|none'>Select County</option>"
-                ctyLast = "none"
-                for (i = 0; i < data.length; i++) {
-                    if ((data[i][1].field_value != ctyLast) && (data[i][1].field_value != "Average") && (data[i][1].field_value != "State Average")) {
-                        selStr += "<option value='" + mlra + "|" + data[i][1].field_value + "'>" + data[i][1].field_value + "</option>"
-                        ctyLast = data[i][1].field_value
-                    }	                
-	            }
-                selStr += "</select>"
+	            scrolltoval = "#theTable"
 
                 // then make the table - should only show all counties when selecting new MLRA, otherwise only show selected county but keep all in selStr.
                 tabStr = "XX records found for <a href='http://www.communitycommons.org/wp-content/uploads/2016/09/nrcs142p2_050898.pdf#page=" + getMLRAinfo(mlra)[2] + "' target='_blank'>MLRA " + mlra + "  (" + getMLRAinfo(mlra)[0] + ")</a>"
                 if (county != 'all') {
                     tabStr += ", " + county + " County"
-                }
-                tabStr += "&nbsp;&nbsp;&nbsp;&nbsp;" + selStr  //the pulldown list
-                tabStr += "&nbsp;&nbsp;&nbsp;&nbsp;<input type='button' value='Map MLRA' onclick='interactiveMap(\"" + mlra + "\")'/>";
+                    scrolltoval = "#mlramap"
+                }               
+                tabStr += "&nbsp;&nbsp;&nbsp;&nbsp;<select onchange='mlra_showtable(\"" + mlra + "\",\"" + county + "\",this.value)'><option value='none'>Group Results By</option>"
+                tabStr += " <option value='county'>County</option>"
+                tabStr += " <option value='region'>Region</option>"
+                tabStr += " <option value='identifier'>Identifier</option>"
+                tabStr += " <option value='fldmgt'>Field Management</option>"
+                tabStr += " <option value='year'>Year</option>"
+                tabStr += " <option value='none'>Un-Group</option>"
+                tabStr += "</select>"
+                tabStr += "&nbsp;&nbsp;&nbsp;<input type='button' value='Map MLRA' onclick='interactiveMap(\"" + mlra + "\")'/>";
                 tabStr += "<table>";
-                tabStr += "<tr><td title='Major Land Resource Area Identifier'><a href='http://staging.communitycommons.org/groups/mu-soil-health/information/mlra'>MLRA</a></td>";
+                tabStr += "<tr>"
+                tabStr += "<td title='Major Land Resource Area Identifier'><a href='http://staging.communitycommons.org/groups/mu-soil-health/information/mlra'>MLRA</a></td>";
 	            tabStr += "<td title='County Name'>County</td>";
 	            tabStr += "<td title='Missouri Region'>Region</td>";
 	            tabStr += "<td title='Site Identifier'>Identifier</td>";
-	            tabStr += "<td title='Field Management Type'>Field Management</td>";
+	            tabStr += "<td title='Field Management Type'><a href='http://staging.communitycommons.org/groups/mu-soil-health/information/field-management'>Field Management</a></td>";
 	            tabStr += "<td title='Sample Year'>Year</td>";
-	            tabStr += "<td title='Total Phospolipid Fatty Acids'><a href='http://staging.communitycommons.org/groups/mu-soil-health/information/plfa'>Total PLFA</a></td>";
-	            tabStr += "<td title='Arbuscular Mycorrhizae Fungi (AMF)'><a href='http://staging.communitycommons.org/groups/mu-soil-health/information/amf'>Am Fungi</a></td>";
-	            tabStr += "<td title='Active Carbon'><a href='http://staging.communitycommons.org/groups/mu-soil-health/information/active-carbon'>Active Carbon</a></td>";
-	            tabStr += "<td title='Bulk Density'><a href='http://staging.communitycommons.org/groups/mu-soil-health/information/bulk-density'>Bulk Density</a></td>";
-	            tabStr += "<td title='Run Off'><a href='http://staging.communitycommons.org/groups/mu-soil-health/information/run-off'>Run Off</a></td></tr>";
+	            tabStr += "<td style='text-align:center' title='Total Phospolipid Fatty Acids'><a href='http://staging.communitycommons.org/groups/mu-soil-health/information/plfa'>Total PLFA</a></td>";
+	            tabStr += "<td style='text-align:center' title='Arbuscular Mycorrhizae Fungi (AMF)'><a href='http://staging.communitycommons.org/groups/mu-soil-health/information/amf'>AMF</a></td>";
+	            tabStr += "<td style='text-align:center' title='Active Carbon'><a href='http://staging.communitycommons.org/groups/mu-soil-health/information/active-carbon'>Active Carbon</a></td>";
+	            tabStr += "<td style='text-align:center' title='Bulk Density'><a href='http://staging.communitycommons.org/groups/mu-soil-health/information/bulk-density'>Bulk Density</a></td>";
+	            tabStr += "<td style='text-align:center' title='Run Off'><a href='http://staging.communitycommons.org/groups/mu-soil-health/information/run-off'>Run Off</a></td>";
+	            if (groupby != 'none') {
+	                tabStr += "<td style='text-align:center' title='Records'>Records</td>";
+	            }
+                tabStr += "</tr>"
 	            var tabStrTemp = "";
 	            var tempCounty = "";
 	            var tempRecCount = 0;
@@ -236,9 +267,14 @@ function mlra_showtable(mlra,county)
 	                    if (isNumber(data[i][j].field_value) & (data[i][j].field_name != "MLRA") & (data[i][j].field_name != "Year")) {
 	                        if ((data[i][j].field_name == "RunOff") & (data[i][j].field_value >= 30)) {
 	                            tabStrTemp += "<td style='text-align:right'> > 30</td>";
+	                        } else if ((data[i][j].field_name == "numrecs") & (groupby == 'none')) {
+                                //do nothing
 	                        } else {
-	                            //tabStrTemp += "<td style='text-align:right'>" + Math.round(data[i][j].field_value * 100) / 100 + "</td>";
-	                            tabStrTemp += "<td style='text-align:right'>" + (data[i][j].field_value * 1.0).toFixed(2) + "</td>";
+	                            if (data[i][j].field_name == "numrecs") {
+	                                tabStrTemp += "<td style='text-align:right'>" + data[i][j].field_value + "</td>";
+	                            } else {
+	                                tabStrTemp += "<td style='text-align:right'>" + (data[i][j].field_value * 1.0).toFixed(2) + "</td>";
+	                            }
 	                        }
 	                    } else {
 	                        if (data[i][j].field_value == "") {
@@ -272,15 +308,37 @@ function mlra_showtable(mlra,county)
 	                }
 	            }
 	            tabStr += "</table>";
-                tabStr = tabStr.replace("XX records",tempRecCount + " records")
+                tabStr = tabStr.replace("XX records",(tempRecCount - 2) + " records")
 	        }
 	        document.getElementById("theTable").innerHTML = tabStr;
+	        jQuery('html,body').animate({
+	            scrollTop: jQuery(scrolltoval).offset().top
+	        }, 1000);
+	        //Get counties list as a separate ajax call.  This should always be all counties in the MLRA
+	        post = { "sql_query": "Select distinct County from CARES.CARES.SoilHealth_06_sep_2016 where MLRA = '" + mlra + "'" }
+	        jQuery.ajax({
+	            type: "POST",
+	            url: "http://services.communitycommons.org/api-report/v1/select",
+	            dataType: "json",
+	            contentType: "application/json; charset=utf-8",
+	            crossDomain: true,
+	            data: JSON.stringify(post),
+	            success: function (data) {
+	                console.log(data);
+	                selStr = "<br/><select onchange='makevis(this.value)'><option value='" + mlra + "|none|none'>Select County</option>"
+	                for (i = 0; i < data.length; i++) {
+	                    selStr += "<option value='" + mlra + "|" + data[i][0].field_value + "|none'>" + data[i][0].field_value + "</option>"
+	                }
+	                selStr += "</select>"
+                    jQuery(selStr).insertBefore(jQuery("#theTable").find("select"))
+	            }
+	        })
 	    },
 	    error: function (err) {
 
 	        console.log(err);
 	    }
-	});
+	});        
 }
 
 function makevis(mlracounty) {
@@ -288,6 +346,7 @@ function makevis(mlracounty) {
     var mlracountylist = mlracounty.split("|");
     var theMLRA = mlracountylist[0];
     var theCounty = mlracountylist[1].toString();
+    var theGB = mlracountylist[2].toString();
     //var theCounty = acounty.value;
 
     //Tried to just make the parent hidden, then turn on a single child, but it doesn't work
@@ -426,7 +485,6 @@ function makevis(mlracounty) {
         
     }
     if (theMLRA != 'none') {
-        mlra_showtable(theMLRA, theCounty);
-    }
-    
+        mlra_showtable(theMLRA, theCounty, theGB);
+    }    
 }
