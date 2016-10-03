@@ -1,3 +1,27 @@
+// Check whether the current user is a member of this hub.
+function is_user_mush_member() {
+	jQuery.ajax({
+        type: 'GET',
+		url: ajaxurl, // This uses the built-in WP global variable.
+		dataType: "json",
+		contentType: "application/json; charset=utf-8",
+		data: {
+			'action': 'cc-mush-is-user-member', // Calls wp_ajax_cc-mush-is-user-member action.
+		},
+		success: function (response) {
+			// Do something. response.data is whether the user is logged in and a hub member.
+			if ( response.data ) {
+				return true;
+			} else {
+				return false;
+			}
+		},
+		error: function (err) {
+			return false;
+		}
+	});
+}
+
 function isNumber(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
 }
