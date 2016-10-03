@@ -19,10 +19,10 @@
  * @return  int The group ID
  */
 function mu_soil_health_get_group_id(){
-	$location = get_site_url();
+	$location = get_site_url( null, '', 'http' );
 	switch ( $location ) {
 		case 'http://commonsdev.local':
-			$group_id = 0;
+			$group_id = 17; // Captains & Cormorants on DC's machine.
 			break;
 		case 'http://dev.communitycommons.org':
 			$group_id = 5322;
