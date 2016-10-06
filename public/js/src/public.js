@@ -1,4 +1,5 @@
 // Check whether the current user is a member of this hub.
+var is_mush_member = null;
 function is_user_mush_member() {
 	jQuery.ajax({
         type: 'GET',
@@ -9,18 +10,15 @@ function is_user_mush_member() {
 			'action': 'cc-mush-is-user-member', // Calls wp_ajax_cc-mush-is-user-member action.
 		},
 		success: function (response) {
-			// Do something. response.data is whether the user is logged in and a hub member.
-			if ( response.data ) {
-				return true;
-			} else {
-				return false;
-			}
+		    //// Do something. response.data is whether the user is logged in and a hub member.
+		    is_mush_member = (response.data) ? true : false;
 		},
 		error: function (err) {
 			return false;
 		}
 	});
 }
+is_user_mush_member();
 
 function isNumber(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
@@ -196,7 +194,7 @@ function mlra_showtable(mlra,county,groupby)
     if (county == 'all') {
         makevis('none|none|none')
     }
-    console.log(groupby)
+    var ismember = is_mush_member;
     var tabStr = ""
     var post = ""
     var scrolltoval = "#theTable"
@@ -230,10 +228,10 @@ function mlra_showtable(mlra,county,groupby)
             post = { "sql_query": "Select MLRA,County,'&nbsp;&nbsp;-' as StateLocation,'&nbsp;&nbsp;-' as SiteID,'&nbsp;&nbsp;-' as FieldManagemnt,Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff, count(*) as numrecs from CARES.CARES.SoilHealth_06_sep_2016 where MLRA = '" + mlra + "' and County = '" + county + "' group by mlra,county,year union all select 'ZZ' as MLRA,'Average' as County,'&nbsp;&nbsp;-' as StateLocation,'&nbsp;&nbsp;-' as SiteID, '&nbsp;&nbsp;-' as FieldManagemnt, NULL as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff, count(*) as numrecs from CARES.CARES.SoilHealth_06_sep_2016 where MLRA = '" + mlra + "' and County = '" + county + "' union all select 'ZZZ' as MLRA,'State Average' as County,'&nbsp;&nbsp;-' as StateLocation,'&nbsp;&nbsp;-' as SiteID, '&nbsp;&nbsp;-' as FieldManagemnt, NULL as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(case when RunOff = 9999 then 30 else RunOff end) as RunOff, count(*) as numrecs from CARES.CARES.SoilHealth_06_sep_2016 order by MLRA, County, Year, SiteID" }
         }
     }
-    //post = { "sql_query": "Select MLRA,County,StateLocation,SiteID,FieldManagemnt,Year,TotalPLFA,AMFungi,ActiveCarbon,BulkDensity,RunOff from CARES.CARES.SoilHealth_06_sep_2016 where MLRA = '" + mlra + "' union all select 'ZZ' as MLRA,'Average' as County,'N/A' as StateLocation,'N/A' as SiteID, 'N/A' as FieldManagemnt, 0 as Year,avg(TotalPLFA) as TotalPLFA,avg(AMFungi) as AMFungi,avg(ActiveCarbon) as ActiveCarbon,avg(BulkDensity) as BulkDensity,avg(RunOff) as RunOff from CARES.CARES.SoilHealth_06_sep_2016 where MLRA = '" + mlra + "'order by MLRA, County, Year, SiteID" }
+
 	jQuery.ajax({
 	    type: "POST",
-	    url: "http://services.communitycommons.org/api-report/v1/select",
+	    url: "//services.communitycommons.org/api-report/v1/select",
 	    dataType: "json",
 	    contentType: "application/json; charset=utf-8",
 	    crossDomain: true,
@@ -242,14 +240,14 @@ function mlra_showtable(mlra,county,groupby)
 	        // got data from sql select, now do something with it
 
 	        if ((data == null) || (data.length < 3)) {
-	            tabStr = "No records found for <a href='http://www.communitycommons.org/wp-content/uploads/2016/09/nrcs142p2_050898.pdf#page=" + getMLRAinfo(mlra)[2] + "' target='_blank'>MLRA " + mlra + "  (" + getMLRAinfo(mlra)[0] + ")</a>"
+	            tabStr = "No records found for <a href='//www.communitycommons.org/wp-content/uploads/2016/09/nrcs142p2_050898.pdf#page=" + getMLRAinfo(mlra)[2] + "' target='_blank'>MLRA " + mlra + "  (" + getMLRAinfo(mlra)[0] + ")</a>"
 	            tabStr += "&nbsp;&nbsp;&nbsp;&nbsp;<input type='button' value='Map MLRA' onclick='interactiveMap(\"" + mlra + "\")'/>";
 	            scrolltoval = "#theTable"
 	        } else {
 	            scrolltoval = "#theTable"
 
                 // then make the table - should only show all counties when selecting new MLRA, otherwise only show selected county but keep all in selStr.
-                tabStr = "XX records found for <a href='http://www.communitycommons.org/wp-content/uploads/2016/09/nrcs142p2_050898.pdf#page=" + getMLRAinfo(mlra)[2] + "' target='_blank'>MLRA " + mlra + "  (" + getMLRAinfo(mlra)[0] + ")</a>"
+                tabStr = "XX records found for <a href='//www.communitycommons.org/wp-content/uploads/2016/09/nrcs142p2_050898.pdf#page=" + getMLRAinfo(mlra)[2] + "' target='_blank'>MLRA " + mlra + "  (" + getMLRAinfo(mlra)[0] + ")</a>"
                 if (county != 'all') {
                     tabStr += ", " + county + " County"
                     scrolltoval = "#mlramap"
@@ -257,7 +255,9 @@ function mlra_showtable(mlra,county,groupby)
                 tabStr += "&nbsp;&nbsp;&nbsp;&nbsp;<select onchange='mlra_showtable(\"" + mlra + "\",\"" + county + "\",this.value)'><option value='none'>Group Results By</option>"
                 tabStr += " <option value='county'>County</option>"
                 tabStr += " <option value='region'>Region</option>"
-                tabStr += " <option value='identifier'>Identifier</option>"
+                if (ismember) {
+                    tabStr += " <option value='identifier'>Identifier</option>"
+                }                
                 tabStr += " <option value='fldmgt'>Field Management</option>"
                 tabStr += " <option value='year'>Year</option>"
                 tabStr += " <option value='none'>Un-Group</option>"
@@ -265,17 +265,19 @@ function mlra_showtable(mlra,county,groupby)
                 tabStr += "&nbsp;&nbsp;&nbsp;<input type='button' value='Map MLRA' onclick='interactiveMap(\"" + mlra + "\")'/>";
                 tabStr += "<table>";
                 tabStr += "<tr>"
-                tabStr += "<td title='Major Land Resource Area Identifier'><a href='http://staging.communitycommons.org/groups/mu-soil-health/information/mlra'>MLRA</a></td>";
+                tabStr += "<td title='Major Land Resource Area Identifier'><a href='//staging.communitycommons.org/groups/mu-soil-health/information/mlra'>MLRA</a></td>";
 	            tabStr += "<td title='County Name'>County</td>";
 	            tabStr += "<td title='Missouri Region'>Region</td>";
-	            tabStr += "<td title='Site Identifier'>Identifier</td>";
-	            tabStr += "<td title='Field Management Type'><a href='http://staging.communitycommons.org/groups/mu-soil-health/information/field-management'>Field Management</a></td>";
+	            if (ismember) {
+	                tabStr += "<td title='Site Identifier'>Identifier</td>";
+	            }
+	            tabStr += "<td title='Field Management Type'><a href='//staging.communitycommons.org/groups/mu-soil-health/information/field-management'>Field Management</a></td>";
 	            tabStr += "<td title='Sample Year'>Year</td>";
-	            tabStr += "<td style='text-align:center' title='Total Phospolipid Fatty Acids'><a href='http://staging.communitycommons.org/groups/mu-soil-health/information/plfa'>Total PLFA</a></td>";
-	            tabStr += "<td style='text-align:center' title='Arbuscular Mycorrhizae Fungi (AMF)'><a href='http://staging.communitycommons.org/groups/mu-soil-health/information/amf'>AMF</a></td>";
-	            tabStr += "<td style='text-align:center' title='Active Carbon'><a href='http://staging.communitycommons.org/groups/mu-soil-health/information/active-carbon'>Active Carbon</a></td>";
-	            tabStr += "<td style='text-align:center' title='Bulk Density'><a href='http://staging.communitycommons.org/groups/mu-soil-health/information/bulk-density'>Bulk Density</a></td>";
-	            tabStr += "<td style='text-align:center' title='Run Off'><a href='http://staging.communitycommons.org/groups/mu-soil-health/information/run-off'>Run Off</a></td>";
+	            tabStr += "<td style='text-align:center' title='Total Phospolipid Fatty Acids'><a href='//staging.communitycommons.org/groups/mu-soil-health/information/plfa'>Total PLFA</a></td>";
+	            tabStr += "<td style='text-align:center' title='Arbuscular Mycorrhizae Fungi (AMF)'><a href='//staging.communitycommons.org/groups/mu-soil-health/information/amf'>AMF</a></td>";
+	            tabStr += "<td style='text-align:center' title='Active Carbon'><a href='//staging.communitycommons.org/groups/mu-soil-health/information/active-carbon'>Active Carbon</a></td>";
+	            tabStr += "<td style='text-align:center' title='Bulk Density'><a href='//staging.communitycommons.org/groups/mu-soil-health/information/bulk-density'>Bulk Density</a></td>";
+	            tabStr += "<td style='text-align:center' title='Run Off'><a href='//staging.communitycommons.org/groups/mu-soil-health/information/run-off'>Run Off</a></td>";
 	            if (groupby != 'none') {
 	                tabStr += "<td style='text-align:center' title='Records'>Records</td>";
 	            }
@@ -301,17 +303,21 @@ function mlra_showtable(mlra,county,groupby)
 	                            }
 	                        }
 	                    } else {
-	                        if (data[i][j].field_value == "") {
-	                            tabStrTemp += "<td style='text-align:right'> -&nbsp;&nbsp;</td>";
-	                        } else if (data[i][j].field_name == "MLRA") {
-	                            if (data[i][j].field_value == "ZZZ") {  //this is the state average
-	                                tabStrTemp += "<td> -&nbsp;&nbsp;</td>";
-	                            } else {
-	                                tabStrTemp += "<td>" + mlra + "</td>";
-	                            }
+	                        if ((data[i][j].field_name == "SiteID") & (ismember == false)) {
+	                            //do nothing - better way to do this?
 	                        } else {
-	                            tabStrTemp += "<td>" + data[i][j].field_value + "</td>";
-	                        }	                        
+	                            if (data[i][j].field_value == "") {
+	                                tabStrTemp += "<td style='text-align:right'> -&nbsp;&nbsp;</td>";
+	                            } else if (data[i][j].field_name == "MLRA") {
+	                                if (data[i][j].field_value == "ZZZ") {  //this is the state average
+	                                    tabStrTemp += "<td> -&nbsp;&nbsp;</td>";
+	                                } else {
+	                                    tabStrTemp += "<td>" + mlra + "</td>";
+	                                }
+	                            } else {
+	                                tabStrTemp += "<td>" + data[i][j].field_value + "</td>";
+	                            }
+	                        }
 	                    }
 	                    if (data[i][j].field_name == "County"){
 	                        tempCounty = data[i][j].field_value
@@ -342,13 +348,12 @@ function mlra_showtable(mlra,county,groupby)
 	        post = { "sql_query": "Select distinct County from CARES.CARES.SoilHealth_06_sep_2016 where MLRA = '" + mlra + "'" }
 	        jQuery.ajax({
 	            type: "POST",
-	            url: "http://services.communitycommons.org/api-report/v1/select",
+	            url: "//services.communitycommons.org/api-report/v1/select",
 	            dataType: "json",
 	            contentType: "application/json; charset=utf-8",
 	            crossDomain: true,
 	            data: JSON.stringify(post),
 	            success: function (data) {
-	                console.log(data);
 	                selStr = "<br/><select onchange='makevis(this.value)'><option value='" + mlra + "|none|none'>Select County</option>"
 	                for (i = 0; i < data.length; i++) {
 	                    selStr += "<option value='" + mlra + "|" + data[i][0].field_value + "|none'>" + data[i][0].field_value + "</option>"
@@ -380,121 +385,26 @@ function makevis(mlracounty) {
     //So, loop through all children
     var svgCounty = "";
     var ctylist = [
-        "Adair",
-        "Andrew",
-        "Atchison",
-        "Audrain",
-        "Barry",
-        "Barton",
-        "Bates",
-        "Benton",
-        "Bollinger",
-        "Boone",
-        "Buchanan",
-        "Butler",
-        "Caldwell",
-        "Callaway",
-        "Camden",
-        "Cape Girardeau",
-        "Carroll",
-        "Carter",
-        "Cass",
-        "Cedar",
-        "Chariton",
-        "Christian",
-        "Clark",
-        "Clay",
-        "Clinton",
-        "Cole",
-        "Cooper",
-        "Crawford",
-        "Dade",
-        "Dallas",
-        "Daviess",
-        "DeKalb",
-        "Dent",
-        "Douglas",
-        "Dunklin",
+        "Adair","Andrew","Atchison","Audrain",
+        "Barry","Barton","Bates","Benton","Bollinger","Boone","Buchanan","Butler",
+        "Caldwell","Callaway","Camden","Cape Girardeau","Carroll","Carter","Cass","Cedar","Chariton","Christian","Clark","Clay","Clinton","Cole","Cooper","Crawford",
+        "Dade","Dallas","Daviess","DeKalb","Dent","Douglas","Dunklin",
         "Franklin",
-        "Gasconade",
-        "Gentry",
-        "Greene",
-        "Grundy",
-        "Harrison",
-        "Henry",
-        "Hickory",
-        "Holt",
-        "Howard",
-        "Howell",
+        "Gasconade","Gentry","Greene","Grundy",
+        "Harrison","Henry","Hickory","Holt","Howard","Howell",
         "Iron",
-        "Jackson",
-        "Jasper",
-        "Jefferson",
-        "Johnson",
+        "Jackson","Jasper","Jefferson","Johnson",
         "Knox",
-        "Laclede",
-        "Lafayette",
-        "Lawrence",
-        "Lewis",
-        "Lincoln",
-        "Linn",
-        "Livingston",
-        "Macon",
-        "Madison",
-        "Maries",
-        "Marion",
-        "McDonald",
-        "Mercer",
-        "Miller",
-        "Mississippi",
-        "Moniteau",
-        "Monroe",
-        "Montgomery",
-        "Morgan",
-        "New Madrid",
-        "Newton",
-        "Nodaway",
-        "Oregon",
-        "Osage",
-        "Ozark",
-        "Pemiscot",
-        "Perry",
-        "Pettis",
-        "Phelps",
-        "Pike",
-        "Platte",
-        "Polk",
-        "Pulaski",
-        "Putnam",
-        "Ralls",
-        "Randolph",
-        "Ray",
-        "Reynolds",
-        "Ripley",
-        "Saline",
-        "Schuyler",
-        "Scotland",
-        "Scott",
-        "Shannon",
-        "Shelby",
-        "St. Charles",
-        "St. Clair",
-        "St. Francois",
-        "St. Louis",
-        "St. Louis City",
-        "Ste. Genevieve",
-        "Stoddard",
-        "Stone",
-        "Sullivan",
-        "Taney",
-        "Texas",
+        "Laclede","Lafayette","Lawrence","Lewis","Lincoln","Linn","Livingston",
+        "Macon","Madison","Maries","Marion","McDonald","Mercer","Miller","Mississippi","Moniteau","Monroe","Montgomery","Morgan",
+        "New Madrid","Newton","Nodaway",
+        "Oregon","Osage","Ozark",
+        "Pemiscot","Perry","Pettis","Phelps","Pike","Platte","Polk","Pulaski","Putnam",
+        "Ralls","Randolph","Ray","Reynolds","Ripley",
+        "Saline","Schuyler","Scotland","Scott","Shannon","Shelby","St. Charles","St. Clair","St. Francois","St. Louis","St. Louis City","Ste. Genevieve","Stoddard","Stone","Sullivan",
+        "Taney","Texas",
         "Vernon",
-        "Warren",
-        "Washington",
-        "Wayne",
-        "Webster",
-        "Worth",
-        "Wright"
+        "Warren","Washington","Wayne","Webster","Worth","Wright"
     ];
 
     for (i = 0; i < ctylist.length; i++) {

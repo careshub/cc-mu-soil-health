@@ -87,9 +87,8 @@ function mu_soil_health_is_current_user_a_member( $user_id = 0 ) {
 	if ( empty( $user_id )  ) {
 		$user_id = get_current_user_id();
 	}
-
 	if ( $user_id ) {
-		$is_member = (bool) groups_is_user_member( $user_id, mu_soil_health_get_group_id() );
+		$is_member = groups_is_user_member( $user_id, mu_soil_health_get_group_id() ) ? true : false;
 	}
 
 	return $is_member;

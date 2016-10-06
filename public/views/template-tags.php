@@ -68,9 +68,9 @@ function mlra_map_output() {
 		<?xml version="1.0" encoding="utf-8" standalone="no"?>
 		<?xml-stylesheet type="text/css" href="mlra_styles.css"?>
 		<!-- Creator: Esri ArcMap 10.3.1.4959 -->
-		<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+		<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"  "//www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 		<svg width="88%" viewBox="100 30 1010 610" enable-background="new 1 1 1 1"
-			version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+			version="1.1" xmlns="//www.w3.org/2000/svg" xmlns:xlink="//www.w3.org/1999/xlink" >
 			<g id="Layers">
 				<g id="NRCS_MLRA_v42_2016_MO_gen">
 					<clipPath id="SVG_CP_1">
@@ -3124,5 +3124,6 @@ function mlra_map_output() {
 	</div>
 	<br/>
 	<div id="theTable"><table></table></div>
+
 	<?php
 }
