@@ -271,13 +271,13 @@ function mlra_showtable(mlra,county,groupby)
 	            if (ismember) {
 	                tabStr += "<td title='Site Identifier'>Identifier</td>";
 	            }
-	            tabStr += "<td title='Field Management Type'><a href='//staging.communitycommons.org/groups/mu-soil-health/information/field-management'>Field Management</a></td>";
+	            tabStr += "<td title='Field Management Type'>Field Management</td>";
 	            tabStr += "<td title='Sample Year'>Year</td>";
-	            tabStr += "<td style='text-align:center' title='Total Phospolipid Fatty Acids'><a href='//www.communitycommons.org/groups/mu-soil-health-hub/information/plfa'>Total PLFA</a></td>";
+	            tabStr += "<td style='text-align:center' title='Total Phospolipid Fatty Acids'><a href='/groups/mu-soil-health-hub/information/plfa'>Total PLFA</a></td>";
 	            tabStr += "<td style='text-align:center' title='Arbuscular Mycorrhizae Fungi (AMF)'><a href='//www.communitycommons.org/groups/mu-soil-health-hub/information/amf'>AMF</a></td>";
-	            tabStr += "<td style='text-align:center' title='Active Carbon'><a href='//www.communitycommons.org/groups/mu-soil-health-hub/information/active-carbon'>Active Carbon</a></td>";
-	            tabStr += "<td style='text-align:center' title='Bulk Density'><a href='//www.communitycommons.org/groups/mu-soil-health-hub/information/bulk-density'>Bulk Density</a></td>";
-	            tabStr += "<td style='text-align:center' title='Run Off'><a href='//www.communitycommons.org/groups/mu-soil-health-hub/information/run-off'>Run Off</a></td>";
+	            tabStr += "<td style='text-align:center' title='Active Carbon'><a href='/groups/mu-soil-health-hub/information/active-carbon'>Active Carbon</a></td>";
+	            tabStr += "<td style='text-align:center' title='Bulk Density'><a href='/groups/mu-soil-health-hub/information/bulk-density'>Bulk Density</a></td>";
+	            tabStr += "<td style='text-align:center' title='Run Off'><a href='/groups/mu-soil-health-hub/information/run-off'>Run Off</a></td>";
 	            if (groupby != 'none') {
 	                tabStr += "<td style='text-align:center' title='Records'>Records</td>";
 	            }
