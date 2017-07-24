@@ -265,7 +265,7 @@ function mlra_showtable(mlra,county,groupby)
                 tabStr += "&nbsp;&nbsp;&nbsp;<input type='button' value='Map MLRA' onclick='interactiveMap(\"" + mlra + "\")'/>";
                 tabStr += "<table>";
                 tabStr += "<tr>"
-                tabStr += "<td title='Major Land Resource Area Identifier'><a href='//staging.communitycommons.org/groups/mu-soil-health/information/mlra'>MLRA</a></td>";
+                tabStr += "<td title='Major Land Resource Area Identifier'><a href='//www.communitycommons.org/groups/mu-soil-health-hub/information/mlra'>MLRA</a></td>";
 	            tabStr += "<td title='County Name'>County</td>";
 	            tabStr += "<td title='Missouri Region'>Region</td>";
 	            if (ismember) {
@@ -273,11 +273,11 @@ function mlra_showtable(mlra,county,groupby)
 	            }
 	            tabStr += "<td title='Field Management Type'><a href='//staging.communitycommons.org/groups/mu-soil-health/information/field-management'>Field Management</a></td>";
 	            tabStr += "<td title='Sample Year'>Year</td>";
-	            tabStr += "<td style='text-align:center' title='Total Phospolipid Fatty Acids'><a href='//staging.communitycommons.org/groups/mu-soil-health/information/plfa'>Total PLFA</a></td>";
-	            tabStr += "<td style='text-align:center' title='Arbuscular Mycorrhizae Fungi (AMF)'><a href='//staging.communitycommons.org/groups/mu-soil-health/information/amf'>AMF</a></td>";
-	            tabStr += "<td style='text-align:center' title='Active Carbon'><a href='//staging.communitycommons.org/groups/mu-soil-health/information/active-carbon'>Active Carbon</a></td>";
-	            tabStr += "<td style='text-align:center' title='Bulk Density'><a href='//staging.communitycommons.org/groups/mu-soil-health/information/bulk-density'>Bulk Density</a></td>";
-	            tabStr += "<td style='text-align:center' title='Run Off'><a href='//staging.communitycommons.org/groups/mu-soil-health/information/run-off'>Run Off</a></td>";
+	            tabStr += "<td style='text-align:center' title='Total Phospolipid Fatty Acids'><a href='//www.communitycommons.org/groups/mu-soil-health-hub/information/plfa'>Total PLFA</a></td>";
+	            tabStr += "<td style='text-align:center' title='Arbuscular Mycorrhizae Fungi (AMF)'><a href='//www.communitycommons.org/groups/mu-soil-health-hub/information/amf'>AMF</a></td>";
+	            tabStr += "<td style='text-align:center' title='Active Carbon'><a href='//www.communitycommons.org/groups/mu-soil-health-hub/information/active-carbon'>Active Carbon</a></td>";
+	            tabStr += "<td style='text-align:center' title='Bulk Density'><a href='//www.communitycommons.org/groups/mu-soil-health-hub/information/bulk-density'>Bulk Density</a></td>";
+	            tabStr += "<td style='text-align:center' title='Run Off'><a href='//www.communitycommons.org/groups/mu-soil-health-hub/information/run-off'>Run Off</a></td>";
 	            if (groupby != 'none') {
 	                tabStr += "<td style='text-align:center' title='Records'>Records</td>";
 	            }
