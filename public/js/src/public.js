@@ -251,13 +251,13 @@ function mlra_showtable(mlra,county,groupby)
                 if (county != 'all') {
                     tabStr += ", " + county + " County"
                     scrolltoval = "#mlramap"
-                }               
+                }
                 tabStr += "&nbsp;&nbsp;&nbsp;&nbsp;<select onchange='mlra_showtable(\"" + mlra + "\",\"" + county + "\",this.value)'><option value='none'>Group Results By</option>"
                 tabStr += " <option value='county'>County</option>"
                 tabStr += " <option value='region'>Region</option>"
                 if (ismember) {
                     tabStr += " <option value='identifier'>Identifier</option>"
-                }                
+                }
                 tabStr += " <option value='fldmgt'>Field Management</option>"
                 tabStr += " <option value='year'>Year</option>"
                 tabStr += " <option value='none'>Un-Group</option>"
@@ -367,7 +367,7 @@ function mlra_showtable(mlra,county,groupby)
 
 	        console.log(err);
 	    }
-	});        
+	});
 }
 
 function makevis(mlracounty) {
@@ -416,9 +416,9 @@ function makevis(mlracounty) {
                 svgCounty.setAttributeNS(null, 'visibility', 'hidden');
             }
         }
-        
+
     }
     if (theMLRA != 'none') {
         mlra_showtable(theMLRA, theCounty, theGB);
-    }    
+    }
 }
